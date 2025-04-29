@@ -9,7 +9,7 @@ datasource db {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model actionable_requirements {
-  id               String  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id               String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   document_id      String  @db.Uuid
   req_summary_text String
   req_source_text  String
@@ -18,13 +18,11 @@ model actionable_requirements {
   document_section String?
   nature           String? @db.VarChar
   sequence_number  Int?
-
-  @@ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model control_framework_controls {
-  id                     String  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                     String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   framework_id           String  @db.Uuid
   control_number         String
   category               String
@@ -32,13 +30,11 @@ model control_framework_controls {
   description            String
   extra_columns          Json?
   contextual_description String?
-
-  @@ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model control_frameworks {
-  id               String  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name             String
   description      String?
   url              String?
@@ -47,8 +43,6 @@ model control_frameworks {
   file_hash        Bytes?
   user_id          String  @default("vidyaraman@deepdivelabs.tech")
   processed_status Boolean @default(false)
-
-  @@ignore
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
