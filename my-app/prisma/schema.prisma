@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model actionable_requirements {
+  id               String  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  document_id      String  @db.Uuid
+  req_summary_text String
+  req_source_text  String
+  category         String?
+  subcategory      String?
+  document_section String?
+  nature           String? @db.VarChar
+  sequence_number  Int?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model control_framework_controls {
+  id                     String  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  framework_id           String  @db.Uuid
+  control_number         String
+  category               String
+  sub_category           String
+  description            String
+  extra_columns          Json?
+  contextual_description String?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model control_frameworks {
+  id               String  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String
+  description      String?
+  url              String?
+  s3_url           String?
+  community_status Boolean @default(false)
+  file_hash        Bytes?
+  user_id          String  @default("vidyaraman@deepdivelabs.tech")
+  processed_status Boolean @default(false)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model regulatory_documents {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  regulation_name   String?
+  jurisdiction      String?
+  effective_date    DateTime?
+  last_updated      DateTime?
+  description       String?
+  document_type     String?
+  original_url      String?
+  html_url          String?
+  s3_url            String?
+  user_id           String?
+  community_status  Boolean?
+  file_hash         Bytes?
+  processed_status  Boolean?
+}
