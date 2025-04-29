@@ -10,6 +10,9 @@ export async function POST(req: NextRequest) {
 
     // console.log(body)
 
+    // console.log('prisma.regulatoryDocuments:', prisma.regulatoryDocuments);
+
+
     const newDocument = await prisma.regulatory_documents.create({
       data: {
         regulation_name: body.regulation_name,
@@ -23,7 +26,7 @@ export async function POST(req: NextRequest) {
         s3_url: body.s3_url,
         user_id: body.user_id,
         community_status: body.community_status,
-        file_hash: body.file_hash,
+        file_hash: body.file_hash ? Buffer.from(body.file_hash, 'base64') : undefined,
         processed_status: body.processed_status,
       },
     });
