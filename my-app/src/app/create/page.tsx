@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { TextField, Button, Container, Typography, Box, Grid, FormControlLabel, Checkbox } from '@mui/material';
 import axios from 'axios';
+import Link from 'next/link'; // To navigate to the view documents page
 
 export default function SubmitDocumentPage() {
   const [formData, setFormData] = useState({
@@ -48,6 +49,7 @@ export default function SubmitDocumentPage() {
         file_hash: '',
         processed_status: false,
       });
+      alert("Document Added!!!")
     } catch (error) {
       console.error('Error submitting document:', error);
     }
@@ -55,7 +57,7 @@ export default function SubmitDocumentPage() {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>Submit New Document</Typography>
+      <Typography variant="h4" gutterBottom>Create Document</Typography>
       <Box component="form" onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/** Form Fields */}
@@ -72,7 +74,7 @@ export default function SubmitDocumentPage() {
             <TextField label="Last Updated" name="last_updated" type="date" InputLabelProps={{ shrink: true }} fullWidth value={formData.last_updated} onChange={handleChange} required />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="Description" name="description" fullWidth multiline rows={3} value={formData.description} onChange={handleChange} required />
+            <TextField label="Description" name="description" fullWidth multiline value={formData.description} onChange={handleChange} required />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField label="Document Type" name="document_type" fullWidth value={formData.document_type} onChange={handleChange} required />
@@ -84,10 +86,10 @@ export default function SubmitDocumentPage() {
             <TextField label="HTML URL" name="html_url" fullWidth value={formData.html_url} onChange={handleChange} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="S3 URL" name="s3_url" fullWidth value={formData.s3_url} onChange={handleChange} />
+            <TextField label="S3 URL" name="s3_url" fullWidth value={formData.s3_url} onChange={handleChange} required />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField label="User ID" name="user_id" fullWidth value={formData.user_id} onChange={handleChange} />
+            <TextField label="User ID" name="user_id" fullWidth value={formData.user_id} onChange={handleChange} required />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField label="File Hash" name="file_hash" fullWidth value={formData.file_hash} onChange={handleChange} />
@@ -102,12 +104,23 @@ export default function SubmitDocumentPage() {
               label="Processed Status"
             />
           </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </Grid>
         </Grid>
+        
+        {/* Submit button with a smaller width and centered */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Button type="submit" variant="contained" color="primary" sx={{ width: 'auto' }}>
+            Add Document
+          </Button>
+        </Box>
+
+        {/* View Documents button below Submit */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Link href="/display">
+            <Button variant="outlined" color="secondary">
+              View Documents
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </Container>
   );
