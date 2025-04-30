@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { TextField, Button, Container, Typography, Box, Grid, FormControlLabel, Checkbox } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, FormControlLabel, Checkbox } from '@mui/material';
 import axios from 'axios';
-import Link from 'next/link'; // To navigate to the view documents page
+import Link from 'next/link'; 
 
 export default function SubmitDocumentPage() {
   const [formData, setFormData] = useState({
@@ -22,15 +22,17 @@ export default function SubmitDocumentPage() {
     processed_status: false,
   });
 
-  const handleChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const target = e.target;
+    const { name, value, type } = target;
+    const checked = (target as HTMLInputElement).checked;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await axios.post('/api/documents', formData);
@@ -57,44 +59,44 @@ export default function SubmitDocumentPage() {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>Create Document</Typography>
+      <Typography variant="h4" component="h1" gutterBottom fontWeight="500" color="primary">Create Document</Typography>
       <Box component="form" onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
           {/** Form Fields */}
-          <Grid item xs={12} sm={6}>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="Regulation Name" name="regulation_name" fullWidth value={formData.regulation_name} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="Jurisdiction" name="jurisdiction" fullWidth value={formData.jurisdiction} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="Effective Date" name="effective_date" type="date" InputLabelProps={{ shrink: true }} fullWidth value={formData.effective_date} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="Last Updated" name="last_updated" type="date" InputLabelProps={{ shrink: true }} fullWidth value={formData.last_updated} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12}>
+          </Box>
+          <Box sx={{ width: '100%' }}>
             <TextField label="Description" name="description" fullWidth multiline value={formData.description} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="Document Type" name="document_type" fullWidth value={formData.document_type} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="Original URL" name="original_url" fullWidth value={formData.original_url} onChange={handleChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="HTML URL" name="html_url" fullWidth value={formData.html_url} onChange={handleChange} />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="S3 URL" name="s3_url" fullWidth value={formData.s3_url} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="User ID" name="user_id" fullWidth value={formData.user_id} onChange={handleChange} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          </Box>
+          <Box sx={{ width: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
             <TextField label="File Hash" name="file_hash" fullWidth value={formData.file_hash} onChange={handleChange} />
-          </Grid>
-          <Grid item xs={12}>
+          </Box>
+          <Box sx={{ width: '100%' }}>
             <FormControlLabel
               control={<Checkbox checked={formData.community_status} onChange={handleChange} name="community_status" />}
               label="Community Status"
@@ -103,20 +105,18 @@ export default function SubmitDocumentPage() {
               control={<Checkbox checked={formData.processed_status} onChange={handleChange} name="processed_status" />}
               label="Processed Status"
             />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
         
-        {/* Submit button with a smaller width and centered */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Button type="submit" variant="contained" color="primary" sx={{ width: 'auto' }}>
             Add Document
           </Button>
         </Box>
 
-        {/* View Documents button below Submit */}
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Link href="/display">
-            <Button variant="outlined" color="secondary">
+            <Button variant="outlined" color="primary">
               View Documents
             </Button>
           </Link>
