@@ -4,7 +4,7 @@ A Next.js application with TypeScript for managing and storing regulatory docume
 
 ## 🚀 Demo
 
-**Live Demo:** [Deployed Link](https://documents-manager-iota.vercel.app/)
+**Live Demo:** [Deployed Link](https://saha-documents-manager.vercel.app)
 
 **Demo Video:** [Watch Demo](https://drive.google.com/file/d/1wjLOufm_dTaC7uDjBJFVApot3zNBYv58/view?usp=sharing)
 
